@@ -1,13 +1,13 @@
 # Use a base image with Ubuntu
 FROM ubuntu:22.04
 
+# Change working directory
+WORKDIR /app
+
 # Set environment variables
 ENV XDG_DATA_HOME="/config"
 ENV XDG_CONFIG_HOME="/config"
 ENV PORT=9117
-
-# Change working directory
-WORKDIR /app
 
 # Install necessary packages and dependencies
 RUN apt update
@@ -24,4 +24,4 @@ RUN rm jackett.tar.gz
 EXPOSE $PORT
 
 # Set the command to run Jackett
-CMD ["/app/Jackett", "-p", "$PORT"]
+CMD ["Jackett", "-p", "$PORT"]
