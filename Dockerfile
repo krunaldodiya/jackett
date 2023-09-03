@@ -2,13 +2,13 @@
 FROM ubuntu:22.04
 
 # Set environment variables
-ENV XDG_DATA_HOME="/config" \
-  XDG_CONFIG_HOME="/config" \
-  PORT=9117
+ENV XDG_DATA_HOME="/config"
+ENV XDG_CONFIG_HOME="/config"
+ENV PORT=9117
 
 # Install necessary packages and dependencies
 RUN apt update
-RUN apt install -y curl libssl1.0
+RUN apt install -y curl
 RUN apt clean
 RUN rm -rf /var/lib/apt/lists/*
 
