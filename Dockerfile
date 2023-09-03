@@ -7,17 +7,15 @@ ENV XDG_DATA_HOME="/config" \
   PORT=9117
 
 # Install necessary packages and dependencies
-RUN apt update && apt install -y \
-  curl \
-  libssl1.0 &&
-  apt-get clean &&
-  rm -rf /var/lib/apt/lists/*
+RUN apt update
+RUN apt install -y curl libssl1.0
+RUN apt clean
+RUN rm -rf /var/lib/apt/lists/*
 
 # Download and install Jackett binary
-RUN curl -o /app/jackett.tar.gz -L \
-  https://github.com/Jackett/Jackett/releases/latest/download/Jackett.Binaries.LinuxAMDx64.tar.gz &&
-  tar xf /app/jackett.tar.gz -C /app &&
-  rm /app/jackett.tar.gz
+RUN curl -o /app/jackett.tar.gz -L https://github.com/Jackett/Jackett/releases/latest/download/Jackett.Binaries.LinuxAMDx64.tar.gz
+RUN tar xf /app/jackett.tar.gz -C /app
+RUN rm /app/jackett.tar.gz
 
 # Change working directory
 WORKDIR /app
