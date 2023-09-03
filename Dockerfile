@@ -1,5 +1,8 @@
-# Use a base image with Ubuntu
+# Use a base image with Ubuntu 22.04
 FROM ubuntu:22.04
+
+# Create a non-root user 'jackett'
+RUN useradd -r -s /sbin/nologin jackett
 
 # Change working directory
 WORKDIR /app
@@ -7,6 +10,7 @@ WORKDIR /app
 # Set environment variables
 ENV XDG_DATA_HOME="/config"
 ENV XDG_CONFIG_HOME="/config"
+ENV PORT="9117"
 
 # Install necessary packages and dependencies
 RUN apt update
@@ -17,8 +21,12 @@ RUN curl -o jackett.tar.gz -L https://github.com/Jackett/Jackett/releases/latest
 RUN tar xf jackett.tar.gz -C .
 RUN rm jackett.tar.gz
 
-# Expose the Jackett port
-EXPOSE 9117
+# Change ownership to the 'jackett' user
+RUN chown -R jackett:jackett ./Jackett # Use relative path
 
-# # Set the command to run Jackett
-CMD ["Jackett/jackett", "-p", "9117"]
+# Expose the Jackett port (use the environment variable)
+EXPOSE $PORT
+
+# Set the command to run Jackett as the 'jackett' user with the dynamic port
+USER jackett
+CMD ["Jackett/jackett", "-p", "$PORT"]
