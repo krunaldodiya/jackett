@@ -10,7 +10,7 @@ ENV XDG_DATA_HOME="/config" \
 RUN apt update && apt install -y \
   curl \
   libssl1.0 &&
-  apt clean &&
+  apt-get clean &&
   rm -rf /var/lib/apt/lists/*
 
 # Download and install Jackett binary
